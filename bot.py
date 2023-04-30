@@ -14,7 +14,7 @@ def command1(bot,message):
 @bot.on_message(filters.private & filters.incoming & filters.audio )
 def _telegram_file(client, message):
   try: 
-    with open("./output/entry/vocals.wav", 'r') as fh:
+    with open("./downloads/entry", 'r') as fh:
       
             sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الصوتية بعد مدة من فضلك', quote=True)
             return
@@ -37,7 +37,7 @@ def _telegram_file(client, message):
 
 def _telegram_file(client, message):
   try: 
-    with open("./output/entry/vocals.wav", 'r') as fh:
+    with open("./downloads/entry", 'r') as fh:
         
             sent_message = message.reply_text('هناك عملية  تتم الآن . أرسل الصوتية بعد مدة من فضلك', quote=True)
             return
