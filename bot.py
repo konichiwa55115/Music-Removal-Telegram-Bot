@@ -29,7 +29,7 @@ def _telegram_file(client, message):
   subprocess.call(['spleeter', 'separate', '-p', '-o', 'output' , "./downloads/entry" ])
   subprocess.call(['mv',"./output/entry/vocals.wav" , "./output/entry/vocals.mp3" ])
     # Upload transcription file to user
-  with open('transcription.txt', 'rb') as f:
+  with open("./output/entry/vocals.mp3", 'rb') as f:
         bot.send_audio(message.chat.id, f)
   subprocess.call(['unlink',"./output/entry/vocals.mp3"])   
  
@@ -52,7 +52,7 @@ def _telegram_file(client, message):
   subprocess.call(['spleeter', 'separate', '-p', '-o', 'output' , "./downloads/entry" ])
   subprocess.call(['mv',"./output/entry/vocals.wav" , "./output/entry/vocals.mp3" ])
     # Upload transcription file to user
-  with open('transcription.txt', 'rb') as f:
+  with open("./output/entry/vocals.mp3", 'rb') as f:
         bot.send_audio(message.chat.id, f)
   subprocess.call(['unlink',"./output/entry/vocals.mp3"])   
    
