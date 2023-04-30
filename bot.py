@@ -31,7 +31,9 @@ def _telegram_file(client, message):
     # Upload transcription file to user
   with open("./output/entry/vocals.mp3", 'rb') as f:
         bot.send_audio(message.chat.id, f)
-  subprocess.call(['unlink',"./downloads/entry"])   
+  subprocess.call(['unlink',"./downloads/entry"]) 
+  subprocess.call(['unlink',"./output/entry/accompaniment.wav"]) 
+  subprocess.call(['unlink',"./output/entry/vocals.mp3"]) 
  
 @bot.on_message(filters.private & filters.incoming & filters.voice )
 
@@ -54,7 +56,9 @@ def _telegram_file(client, message):
     # Upload transcription file to user
   with open('./output/entry/vocals.mp3', 'rb') as f:
         bot.send_audio(message.chat.id, f)
-  subprocess.call(['unlink',"./downloads/entry"])   
+  subprocess.call(['unlink',"./downloads/entry"]) 
+  subprocess.call(['unlink',"./output/entry/accompaniment.wav"]) 
+  subprocess.call(['unlink',"./output/entry/vocals.mp3"]) 
    
 
 bot.run()
