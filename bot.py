@@ -9,7 +9,7 @@ bot = Client(
 )
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
-    bot.send_message(message.chat.id, " السلام عليكم أنا بوت تفريغ صوتيات , فقط أرسل الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
+    bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
     
 @bot.on_message(filters.private & filters.incoming & filters.audio )
 def _telegram_file(client, message):
@@ -21,7 +21,7 @@ def _telegram_file(client, message):
   except FileNotFoundError: 
     pass  
   user_id = message.from_user.id 
-  sent_message = message.reply_text('جار التفريغ', quote=True)
+  sent_message = message.reply_text('جار الفصل', quote=True)
   file = message.audio
   file_path = message.download(file_name="entry")
 
@@ -44,7 +44,7 @@ def _telegram_file(client, message):
   except FileNotFoundError: 
     pass  
   user_id = message.from_user.id
-  sent_message = message.reply_text('جار التفريغ', quote=True)
+  sent_message = message.reply_text('جار الفصل', quote=True)
   file = message.voice
   file_path = message.download(file_name="entry")
 
@@ -52,7 +52,7 @@ def _telegram_file(client, message):
   subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "./downloads/entry" ])
   subprocess.call(['mv',"./output/entry/vocals.wav" , "./output/entry/vocals.mp3" ])
     # Upload transcription file to user
-  with open("./output/entry/vocals.mp3", 'rb') as f:
+  with open('./output/entry/vocals.mp3', 'rb') as f:
         bot.send_audio(message.chat.id, f)
   subprocess.call(['unlink',"./output/entry/vocals.mp3"])   
    
