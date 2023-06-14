@@ -27,11 +27,13 @@ def _telegram_file(client, message):
 
     # Execute speech.py script with entry file
   subprocess.call(['ffmpeg', '-i',"./downloads/entry",'-q:a','0','-map','a',"entry.mp3",'-y' ])
+  subprocess.call(['ffmpeg','-i',"./downloads/entry",'-c','copy','-an',"entry.mp4",'-y'])
   subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "./entry.mp3" ])
   subprocess.call(['mv',"./output/entry/vocals.wav" , "./output/entry/vocals.mp3" ])
+  subprocess.call(['ffmpeg', '-i',"entry.mp4",'-i',"./output/entry/vocals.mp3",'-c:v','copy','-c:a','aac','output.mp4','-y' ])
     # Upload transcription file to user
-  with open("./output/entry/vocals.mp3", 'rb') as f:
-        bot.send_audio(message.chat.id, f)
+  with open("./output.mp4", 'rb') as f:
+        bot.send_video(message.chat.id, f)
   subprocess.call(['sudo','rm','-r',"output"]) 
  
  
