@@ -9,12 +9,12 @@ bot = Client(
 )
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
-    bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
+    bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الفيديو هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
     
 @bot.on_message(filters.private & filters.incoming & filters.video )
 def _telegram_file(client, message):
   try: 
-    with open("./output", 'r') as fh:
+    with open("./downloads/entry", 'r') as fh:
       
             sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الصوتية بعد مدة من فضلك', quote=True)
             return
@@ -34,7 +34,7 @@ def _telegram_file(client, message):
     # Upload transcription file to user
   with open("./output.mp4", 'rb') as f:
         bot.send_video(message.chat.id, f)
-  subprocess.call(['sudo','rm','-r',"output"]) 
+  subprocess.call(['sudo','rm','-r',"./downloads/entry"]) 
  
  
 @bot.on_message(filters.private & filters.incoming & filters.voice )
