@@ -11,7 +11,7 @@ bot = Client(
 def command1(bot,message):
     bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
     
-@bot.on_message(filters.private & filters.incoming & filters.audio )
+@bot.on_message(filters.private & filters.incoming & filters.video )
 def _telegram_file(client, message):
   try: 
     with open("./output", 'r') as fh:
@@ -22,11 +22,12 @@ def _telegram_file(client, message):
     pass  
   user_id = message.from_user.id 
   sent_message = message.reply_text('جار الفصل \n\n قال رسول الله ﷺ  لَيَكونَنَّ مِن أُمَّتي أقْوامٌ يَسْتَحِلُّونَ الحِرَ والحَرِيرَ، والخَمْرَ والمَعازِفَ، ولَيَنْزِلَنَّ أقْوامٌ إلى جَنْبِ عَلَمٍ، يَرُوحُ عليهم بسارِحَةٍ لهمْ، يَأْتِيهِمْ -يَعْنِي الفقِيرَ- لِحاجَةٍ، فيَقولونَ: ارْجِعْ إلَيْنا غَدًا، فيُبَيِّتُهُمُ اللَّهُ، ويَضَعُ العَلَمَ، ويَمْسَخُ آخَرِينَ قِرَدَةً وخَنازِيرَ إلى يَومِ القِيامَةِ. ( صحيح البخاري)', quote=True)
-  file = message.audio
+  file = message.video
   file_path = message.download(file_name="entry")
 
     # Execute speech.py script with entry file
-  subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "./downloads/entry" ])
+  subprocess.call(['ffmpeg', '-i',"./downloads/entry", '-map',"0:{data['map']}",'-c','copy',"entry.mp3",'-y' ])
+  subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "./entry.mp3" ])
   subprocess.call(['mv',"./output/entry/vocals.wav" , "./output/entry/vocals.mp3" ])
     # Upload transcription file to user
   with open("./output/entry/vocals.mp3", 'rb') as f:
