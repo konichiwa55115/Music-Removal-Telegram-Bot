@@ -37,6 +37,7 @@ def _telegram_file(client, message):
   subprocess.call(['sudo','rm','-r',"./downloads/entry"]) 
   subprocess.call(['sudo','rm','-r',"entry.mp4"]) 
   subprocess.call(['sudo','rm','-r',"entry.mp3"]) 
+  subprocess.call(['sudo','rm','-r',"output.mp4"]) 
  
  
 
