@@ -35,6 +35,8 @@ def _telegram_file(client, message):
   with open("./output.mp4", 'rb') as f:
         bot.send_video(message.chat.id, f)
   subprocess.call(['sudo','rm','-r',"./downloads/entry"]) 
+  subprocess.call(['sudo','rm','-r',"entry.mp4"]) 
+  subprocess.call(['sudo','rm','-r',"entry.mp3"]) 
  
  
 
