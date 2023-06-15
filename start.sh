@@ -1,5 +1,5 @@
 echo "Cloning Repo...."
-git clone https://github.com/konichiwa55115/transtest /LazyDeveloper
+git clone https://github.com/konichiwa55115/mscrmv /LazyDeveloper
 cd /LazyDeveloper
 pip3 install -r requirements.txt
 pip3 install spleeter
