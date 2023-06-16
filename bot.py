@@ -5,13 +5,13 @@ bot = Client(
     "myfirs",
     api_id=17983098,
     api_hash="ee28199396e0925f1f44d945ac174f64",
-    bot_token="6199159516:AAF62NQbzVB3bWm79sgzOHO8BG4ND5dBMLU"
+    bot_token="6199159516:AAGxjwXCzMIaiPW90z2ZqXKaLqZCnBaYA-M"
 )
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
     bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الفيديو هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
     
-@bot.on_message(filters.private & filters.incoming & filters.video )
+@bot.on_message(filters.private & filters.incoming & filters.video || filters.document )
 def _telegram_file(client, message):
   try: 
     with open("./downloads/entry", 'r') as fh:
