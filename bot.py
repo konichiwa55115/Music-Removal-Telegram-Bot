@@ -11,7 +11,7 @@ bot = Client(
 def command1(bot,message):
     bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الفيديو هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
     
-@bot.on_message(filters.private & filters.incoming & filters.video || filters.document )
+@bot.on_message(filters.private & filters.incoming & filters.video | filters.document )
 def _telegram_file(client, message):
   try: 
     with open("./downloads/entry", 'r') as fh:
