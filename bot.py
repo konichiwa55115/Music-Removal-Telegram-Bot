@@ -34,10 +34,10 @@ def _telegram_file(client, message):
     # Upload transcription file to user
   with open("./output.mp4", 'rb') as f:
         bot.send_video(message.chat.id, f)
-  subprocess.call(['sudo','rm','-r',"./downloads/entry"]) 
-  subprocess.call(['sudo','rm','-r',"entry.mp4"]) 
-  subprocess.call(['sudo','rm','-r',"entry.mp3"]) 
-  subprocess.call(['sudo','rm','-r',"output.mp4"]) 
+  subprocess.call(['unlink',"./downloads/entry"]) 
+  subprocess.call(['unlink',"entry.mp4"]) 
+  subprocess.call(['unlink',"entry.mp3"]) 
+  subprocess.call(['unlink',"output.mp4"]) 
  
  
 
