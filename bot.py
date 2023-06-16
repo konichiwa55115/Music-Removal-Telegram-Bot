@@ -5,7 +5,7 @@ bot = Client(
     "myfirs",
     api_id=17983098,
     api_hash="ee28199396e0925f1f44d945ac174f64",
-    bot_token="6199159516:AAGxjwXCzMIaiPW90z2ZqXKaLqZCnBaYA-M"
+    bot_token="5714654934:AAEVIR8baWhJcgUOtWeNmrSjvdRfYRiY7tI"
 )
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
@@ -14,9 +14,9 @@ def command1(bot,message):
 @bot.on_message(filters.private & filters.incoming & filters.video | filters.document )
 def _telegram_file(client, message):
   try: 
-    with open("./downloads/entry", 'r') as fh:
+    with open("myfile.txt", 'r') as fh:
       
-            sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الصوتية بعد مدة من فضلك', quote=True)
+            sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الفيديو بعد مدة من فضلك', quote=True)
             return
   except FileNotFoundError: 
     pass  
@@ -24,6 +24,8 @@ def _telegram_file(client, message):
   sent_message = message.reply_text('جار الفصل \n\n قال رسول الله ﷺ  لَيَكونَنَّ مِن أُمَّتي أقْوامٌ يَسْتَحِلُّونَ الحِرَ والحَرِيرَ، والخَمْرَ والمَعازِفَ، ولَيَنْزِلَنَّ أقْوامٌ إلى جَنْبِ عَلَمٍ، يَرُوحُ عليهم بسارِحَةٍ لهمْ، يَأْتِيهِمْ -يَعْنِي الفقِيرَ- لِحاجَةٍ، فيَقولونَ: ارْجِعْ إلَيْنا غَدًا، فيُبَيِّتُهُمُ اللَّهُ، ويَضَعُ العَلَمَ، ويَمْسَخُ آخَرِينَ قِرَدَةً وخَنازِيرَ إلى يَومِ القِيامَةِ. ( صحيح البخاري)', quote=True)
   file = message.video
   file_path = message.download(file_name="entry")
+  f = open("myfile.txt", "x")
+
 
     # Execute speech.py script with entry file
   subprocess.call(['ffmpeg', '-i',"./downloads/entry",'-q:a','0','-map','a',"entry.mp3",'-y' ])
@@ -34,10 +36,8 @@ def _telegram_file(client, message):
     # Upload transcription file to user
   with open("./output.mp4", 'rb') as f:
         bot.send_video(message.chat.id, f)
-  subprocess.call(['unlink',"./downloads/entry"]) 
-  subprocess.call(['unlink',"entry.mp4"]) 
-  subprocess.call(['unlink',"entry.mp3"]) 
-  subprocess.call(['unlink',"output.mp4"]) 
+  subprocess.call(['unlink',"myfile.txt"]) 
+ 
  
  
 
