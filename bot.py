@@ -5,7 +5,7 @@ bot = Client(
     "myfirs",
     api_id=17983098,
     api_hash="ee28199396e0925f1f44d945ac174f64",
-    bot_token="6199159516:AAEl9HnYYOgpOI_LMRibWarruVQMiRGNkhU"
+    bot_token="5714654934:AAEVIR8baWhJcgUOtWeNmrSjvdRfYRiY7tI"
 )
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
@@ -23,17 +23,12 @@ def _telegram_file(client, message):
   user_id = message.from_user.id 
   sent_message = message.reply_text('جار الفصل \n\n قال رسول الله ﷺ  لَيَكونَنَّ مِن أُمَّتي أقْوامٌ يَسْتَحِلُّونَ الحِرَ والحَرِيرَ، والخَمْرَ والمَعازِفَ، ولَيَنْزِلَنَّ أقْوامٌ إلى جَنْبِ عَلَمٍ، يَرُوحُ عليهم بسارِحَةٍ لهمْ، يَأْتِيهِمْ -يَعْنِي الفقِيرَ- لِحاجَةٍ، فيَقولونَ: ارْجِعْ إلَيْنا غَدًا، فيُبَيِّتُهُمُ اللَّهُ، ويَضَعُ العَلَمَ، ويَمْسَخُ آخَرِينَ قِرَدَةً وخَنازِيرَ إلى يَومِ القِيامَةِ. ( صحيح البخاري)', quote=True)
   file = message.video
-  file_path = message.download(file_name="entry")
+  file_path = message.download(file_name="entry.mp4")
   f = open("myfile.txt", "x")
 
 
-    # Execute speech.py script with entry file
-  subprocess.call(['ffmpeg', '-i',"./downloads/entry",'-q:a','0','-map','a',"entry.mp3",'-y' ])
-  subprocess.call(['ffmpeg','-i',"./downloads/entry",'-c','copy','-an',"entry.mp4",'-y'])
-  subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "entry.mp3" ])
-  subprocess.call(['mv',"./output/entry/vocals.wav" , "./output/entry/vocals.mp3" ])
-  subprocess.call(['ffmpeg', '-i',"entry.mp4",'-i',"./output/entry/vocals.mp3",'-c:v','copy','-c:a','aac','output.mp4','-y' ])
-    # Upload transcription file to user
+  subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "./downloads/entry.mp4" ])  
+  subprocess.call(['ffmpeg', '-i',"./downloads/entry.mp4",'-i',"./output/entry/vocals.wav",'-c:v','copy','-c:a','aac','-map','0:v:0','-map','1:a:0','output.mp4','-y' ])
   with open("./output.mp4", 'rb') as f:
         bot.send_video(message.chat.id, f)
   subprocess.call(['unlink',"myfile.txt"]) 
