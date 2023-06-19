@@ -27,7 +27,7 @@ def _telegram_file(client, message):
   f = open("myfile.txt", "x")
 
 
-  subprocess.call(['spleeter', 'separate', '-p', 'spleeter:2stems', '-o', 'output' , "./downloads/entry.mp4" ])  
+  subprocess.call(['spleeter', 'separate', '-p', 'spleeter:5stems', '-o', 'output' , "./downloads/entry.mp4" ])  
   subprocess.call(['ffmpeg', '-i',"./downloads/entry.mp4",'-i',"./output/entry/vocals.wav",'-c:v','copy','-c:a','aac','-map','0:v:0','-map','1:a:0','output.mp4','-y' ])
   with open("./output.mp4", 'rb') as f:
         bot.send_video(message.chat.id, f)
