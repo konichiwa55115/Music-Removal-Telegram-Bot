@@ -6,7 +6,7 @@ if you're running it on vps , make sure to install spleeter using pip in superus
 
 sudo pip install spleeter 
 
-else , Building it using Docker woul be fine 
+else , Building it using Docker would be fine 
 
 for support :
 [Paypal](https://www.paypal.com/paypalme/kelectronic89)
