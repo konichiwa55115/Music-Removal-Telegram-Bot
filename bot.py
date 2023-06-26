@@ -4,10 +4,11 @@ import subprocess
 import audioread
 bot = Client(
     "msrmv",
-    api_id=17983098,
-    api_hash="ee28199396e0925f1f44d945ac174f64",
-    bot_token="5714654934:AAEVIR8baWhJcgUOtWeNmrSjvdRfYRiY7tI"
+    api_id=******,
+    api_hash="********",
+    bot_token="********"
 )
+#put your id,hash and token instead of stars ***
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
     bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الفيديو/ الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
