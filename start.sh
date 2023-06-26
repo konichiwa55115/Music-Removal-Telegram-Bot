@@ -1,5 +1,5 @@
 echo "Cloning Repo...."
-git clone https://github.com/konichiwa55115/mscrmv /kony
+git clone https://github.com/konichiwa55115/Music-Removal-Telegram-Bot /kony
 cd /kony
 pip3 install -r requirements.txt
 echo "Starting Bot...."
