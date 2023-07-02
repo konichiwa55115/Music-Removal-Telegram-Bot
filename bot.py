@@ -4,9 +4,9 @@ import subprocess
 import audioread
 bot = Client(
     "msrmv",
-    api_id=******,
-    api_hash="********",
-    bot_token="********"
+    api_id=17983098,
+    api_hash="ee28199396e0925f1f44d945ac174f64",
+    bot_token="6199159516:AAG2zfGoYPkEU5xQ7ypxerhbhgWgj5V8IbM"
 )
 #put your id,hash and token instead of stars ***
 @bot.on_message(filters.command('start') & filters.private)
