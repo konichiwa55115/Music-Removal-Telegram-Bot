@@ -15,14 +15,7 @@ def command1(bot,message):
     
 @bot.on_message(filters.private & filters.incoming & filters.video | filters.document )
 def _telegram_file(client, message):
-  try: 
-    with open("myfile.txt", 'r') as fh:
-      
-            sent_message = message.reply_text('هناك عملية تتم الآن . أرسل الفيديو/الصوتية بعد مدة من فضلك', quote=True)
-            return
-  except FileNotFoundError: 
-    pass  
-    f = open("myfile.txt", "x")
+  
   user_id = message.from_user.id 
   file = message.video
   file_path = message.download(file_name="./downloads/")
@@ -49,7 +42,6 @@ def _telegram_file(client, message):
          subprocess.call(['ffmpeg', '-i',file_path,'-i',f"./output/{realname}/vocals.wav",'-c:v','copy','-c:a','aac','-map','0:v:0','-map','1:a:0',mp4file,'-y' ])
          with open(mp4file, 'rb') as f:
           bot.send_video(message.chat.id, f)
-          subprocess.call(['unlink',"myfile.txt"]) 
           subprocess.call(['unlink',vocals]) 
           subprocess.call(['unlink',accompliant]) 
           subprocess.call(['unlink',mp3file]) 
@@ -83,7 +75,6 @@ def _telegram_file(client, message):
         subprocess.call(['ffmpeg', '-i',file_path,'-i',finalsound,'-c:v','copy','-c:a','aac','-map','0:v:0','-map','1:a:0',mp4file,'-y' ])
         with open(mp4file, 'rb') as f:
           bot.send_video(message.chat.id, f)
-          subprocess.call(['unlink',"myfile.txt"]) 
           subprocess.call(['unlink',"list.txt"]) 
           subprocess.call(['unlink',mp4file]) 
           subprocess.call(['unlink',mp3file]) 
@@ -103,14 +94,8 @@ def _telegram_file(client, message):
 
 @bot.on_message(filters.private & filters.incoming & filters.audio | filters.voice )
 def _telegram_file(client, message):
-  try: 
-    with open("myfile.txt", 'r') as fh:
-      
-            sent_message = message.reply_text('هناك عملية تتم الآن . أرسل الفيديو/الصوتية بعد مدة من فضلك', quote=True)
-            return
-  except FileNotFoundError: 
-    pass  
-    f = open("myfile.txt", "x")
+ 
+    
   user_id = message.from_user.id 
   file = message.voice
   file_path = message.download(file_name="./downloads/")
@@ -137,7 +122,6 @@ def _telegram_file(client, message):
 
          with open(mp3file, 'rb') as f:
           bot.send_audio(message.chat.id, f)
-          subprocess.call(['unlink',"myfile.txt"]) 
           subprocess.call(['unlink',vocals]) 
           subprocess.call(['unlink',accompliant]) 
           subprocess.call(['unlink',mp3file]) 
@@ -171,7 +155,6 @@ def _telegram_file(client, message):
 
         with open(mp3file, 'rb') as f:
           bot.send_audio(message.chat.id, f)
-          subprocess.call(['unlink',"myfile.txt"]) 
           subprocess.call(['unlink',"list.txt"]) 
           subprocess.call(['unlink',mp3file]) 
           subprocess.call(['unlink',finalsound]) 
