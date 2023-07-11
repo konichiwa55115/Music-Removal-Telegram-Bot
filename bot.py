@@ -35,10 +35,10 @@ def _telegram_file(client, message):
   def duration_detector(length):
         seconds = length
         return seconds
-  with audioread.audio_open(mp3file) as f:
+  with audioread.audio_open(f"./workdir/{mp3file}") as f:
             totalsec = f.duration
   if totalsec<= 600 :
-         cmd(f'spleeter separate -p spleeter:2stems -o './workdir/' {mp3file}')
+         cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
          cmd(f'ffmpeg -i {file_path} -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
          
          with open(mp4file, 'rb') as f:
@@ -57,7 +57,7 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             cmd(f'spleeter separate -p spleeter:2stems -o './workdir/' {pathy}')
+             cmd(f'spleeter separate -p spleeter:2stems -o workdir {pathy}')
              coca += 1                    
         with open('list.txt', 'x') as f:
              kaka=0
@@ -93,10 +93,10 @@ def _telegram_file(client, message):
   def duration_detector(length):
         seconds = length
         return seconds
-  with audioread.audio_open(mp3file) as f:
+  with audioread.audio_open(f"workdir/{mp3file}") as f:
             totalsec = f.duration
   if totalsec<= 600 :
-         cmd(f'spleeter separate -p spleeter:2stems -o './workdir/' {mp3file}')
+         cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
          cmd(f'ffmpeg -i {vocals} -q:a 0 -map a "/workdir/{mp3file}" -y')
 
          with open(f"/workdir/{mp3file}", 'rb') as f:
@@ -116,7 +116,7 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             cmd(f'spleeter separate -p spleeter:2stems -o './workdir/' {pathy}')
+             cmd(f'spleeter separate -p spleeter:2stems -o workdir {pathy}')
              coca += 1                    
         with open('list.txt', 'x') as f:
              kaka=0
@@ -124,7 +124,6 @@ def _telegram_file(client, message):
                 f.write(f'file workdir/{realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'ffmpeg -f concat -safe 0 -i list.txt "./workdir/{finalsound}" -y')
-        subprocess.call(['ffmpeg', '-i',finalsound,'-q:a','0','-map','a',mp3file,'-y' ])
         cmd(f'ffmpeg -i {finalsound} -q:a 0 -map a "./workdir/{mp3file}" -y')
 
 
