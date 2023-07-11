@@ -41,7 +41,7 @@ def _telegram_file(client, message):
          cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
          cmd(f'ffmpeg -i {file_path} -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
          
-         with open(mp4file, 'rb') as f:
+         with open(f"./workdir/{mp4file}", 'rb') as f:
           bot.send_video(message.chat.id, f)
          shutil.rmtree('./workdir/')
 
@@ -67,7 +67,7 @@ def _telegram_file(client, message):
         cmd(f'ffmpeg -f concat -safe 0 -i list.txt "./workdir/{finalsound}" -y')
         cmd(f'ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
 
-        with open(mp4file, 'rb') as f:
+        with open("./workdir/{mp4file}", 'rb') as f:
           bot.send_video(message.chat.id, f)
           shutil.rmtree('./workdir/')
           shutil.rmtree('./parts/')      
