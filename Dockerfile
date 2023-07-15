@@ -14,7 +14,6 @@ COPY requirements.txt /requirements.txt
 RUN cd /
 RUN pip3 install -U -r requirements.txt
 RUN pip3 install spleeter
-RUN pip3 install spleeter
 RUN mkdir /kony
 WORKDIR /kony
 COPY start.sh /start.sh
