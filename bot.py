@@ -17,6 +17,11 @@ def command1(bot,message):
     
 @bot.on_message(filters.private & filters.incoming & filters.video | filters.document )
 def _telegram_file(client, message):
+  if os.path.isdir("./downloads/") :
+        sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الفيديو  بعد مدة من فضلك', quote=True)
+        return
+  else :
+        pass
   
   user_id = message.from_user.id 
   file = message.video
@@ -78,7 +83,11 @@ def _telegram_file(client, message):
 
 @bot.on_message(filters.private & filters.incoming & filters.audio | filters.voice )
 def _telegram_file(client, message):
- 
+  if os.path.isdir("./downloads/") :
+        sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الصوتية  بعد مدة من فضلك', quote=True)
+        return
+  else :
+        pass
     
   user_id = message.from_user.id 
   file = message.voice
