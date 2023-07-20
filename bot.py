@@ -64,7 +64,7 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             temppathy=f"./parts/{realname}mod00000000{coca}.wav"
+             temppathy=f"./parts/{realname}mod00000000{coca}.mp3"
              cmd(f'ffmpeg -i {pathy} -q:a 0 -map a {temppathy} -y')
              cmd(f'spleeter separate -p spleeter:2stems -o workdir {temppathy}')
              coca += 1                    
