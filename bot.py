@@ -64,12 +64,14 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             cmd(f'spleeter separate -p spleeter:2stems -o workdir {pathy}')
+             temppathy=f"./parts/{realname}mod00000000{coca}.wav"
+             cmd(f'ffmpeg -i {pathy} -q:a 0 -map a {temppathy} -y')
+             cmd(f'spleeter separate -p spleeter:2stems -o workdir {temppathy}')
              coca += 1                    
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
-                f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
+                f.write(f'file {realname}mod00000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y')
         cmd(f'ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
