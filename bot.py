@@ -42,7 +42,7 @@ def _telegram_file(client, message):
         return seconds
   with audioread.audio_open(f"./workdir/{mp3file}") as f:
             totalsec = f.duration
-  if totalsec<= 600 :
+  if totalsec<= 180 :
          cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
          cmd(f'ffmpeg -i {file_path} -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
          
@@ -54,7 +54,7 @@ def _telegram_file(client, message):
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'ffmpeg -i workdir/{mp3file} -f segment -segment_time 600 -c copy "./parts/{realname}%09d.wav" -y')
+        cmd(f'ffmpeg -i workdir/{mp3file} -f segment -segment_time 180 -c copy "./parts/{realname}%09d.wav" -y')
         dir_path = "./parts/"
         count = 0
         for path in os.listdir(dir_path):
@@ -64,14 +64,12 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             temppathy=f"./parts/{realname}0{coca}.mp3"
-             cmd(f'ffmpeg -i {pathy} -q:a 0 -map a {temppathy} -y')
-             cmd(f'spleeter separate -p spleeter:2stems -o workdir {temppathy}')
+             cmd(f'spleeter separate -p spleeter:2stems -o workdir {pathy}')
              coca += 1                    
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
-                f.write(f'file {realname}0{kaka}/vocals.wav\n')
+                f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y')
         cmd(f'ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
@@ -109,7 +107,7 @@ def _telegram_file(client, message):
         return seconds
   with audioread.audio_open(f"workdir/{mp3file}") as f:
             totalsec = f.duration
-  if totalsec<= 600 :
+  if totalsec<= 180 :
          cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
          cmd(f'ffmpeg -i {vocals} -q:a 0 -map a "./workdir/{mp3file}" -y')
 
@@ -121,7 +119,7 @@ def _telegram_file(client, message):
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 600 -c copy "./parts/{realname}%09d.wav" -y')
+        cmd(f'ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 180 -c copy "./parts/{realname}%09d.wav" -y')
 
         dir_path = "./parts/"
         count = 0
