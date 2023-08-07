@@ -13,7 +13,7 @@ bot = Client(
 #put your id,hash and token instead of stars ***
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
-    bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الفيديو/ الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/ibnAlQyyim/1120 ",disable_web_page_preview=True)
+    bot.send_message(message.chat.id, " السلام عليكم أنا فصل الموسيقا , فقط أرسل الفيديو/ الصوتية هنا\n\n  لبقية البوتات هنا \n\n https://t.me/sunnay6626/2 ",disable_web_page_preview=True)
     
 @bot.on_message(filters.private & filters.incoming & filters.video | filters.document )
 def _telegram_file(client, message):
