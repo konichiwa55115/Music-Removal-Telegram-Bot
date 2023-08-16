@@ -60,7 +60,7 @@ def _telegram_file(client, message):
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 30 -c copy "./parts/{realname}%09d.wav" -y''')
+        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 600 -c copy "./parts/{realname}%09d.wav" -y''')
         dir_path = "./parts/"
         count = 0
         for path in os.listdir(dir_path):
@@ -155,7 +155,7 @@ def _telegram_file(client, message):
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 30 -c copy "./parts/{realname}%09d.wav" -y''')
+        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 600 -c copy "./parts/{realname}%09d.wav" -y''')
 
         dir_path = "./parts/"
         count = 0
