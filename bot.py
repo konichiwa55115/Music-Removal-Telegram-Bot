@@ -69,7 +69,7 @@ def _telegram_file(client, message):
                             numbofitems=count
         if numbofitems<10 :
          coca=0
-         while (coca < numbofitems): 
+         while (coca <= numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
              cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              coca += 1                    
