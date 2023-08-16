@@ -67,15 +67,37 @@ def _telegram_file(client, message):
                 if os.path.isfile(os.path.join(dir_path, path)):
                             count += 1
                             numbofitems=count
-        coca=0
-        while (coca < numbofitems): 
+        if numbofitems<10 :
+         coca=0
+         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
              cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              coca += 1                    
-        with open('./workdir/list.txt', 'x') as f:
+         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
                 f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
+                kaka += 1
+        else :
+         coca = 0
+         while (coca < 10): 
+             pathy=f"./parts/{realname}00000000{coca}.wav"
+             cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
+             coca += 1                    
+         with open('./workdir/list.txt', 'x') as f:
+             kaka=0
+             while (kaka < numbofitems):
+                f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
+                kaka += 1
+         coca = 10
+         while (coca < numbofitems): 
+             pathy=f"./parts/{realname}0000000{coca}.wav"
+             cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
+             coca += 1                    
+         with open('./workdir/list.txt', 'x') as f:
+             kaka=10
+             while (kaka < numbofitems):
+                f.write(f'file {realname}0000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
         cmd(f'''ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
