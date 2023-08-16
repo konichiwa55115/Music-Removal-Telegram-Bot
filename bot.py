@@ -60,7 +60,7 @@ def _telegram_file(client, message):
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 30 -c copy "./parts/{realname}%09d.wav" -y''')
+        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 30 -c copy "./parts/{realname}.wav" -y''')
         dir_path = "./parts/"
         count = 0
         for path in os.listdir(dir_path):
@@ -69,13 +69,13 @@ def _telegram_file(client, message):
                             numbofitems=count
         coca=0
         while (coca < numbofitems): 
-             pathy=f"./parts/{realname}00000000{coca}.wav"
+             pathy=f"./parts/{realname}{coca}.wav"
              cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              coca += 1                    
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
-                f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
+                f.write(f'file {realname}{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
         cmd(f'''ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
@@ -143,13 +143,13 @@ def _telegram_file(client, message):
                             numbofitems=count
         coca=0
         while (coca < numbofitems): 
-             pathy=f"./parts/{realname}00000000{coca}.wav"
+             pathy=f"./parts/{realname}{coca}.wav"
              cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              coca += 1                    
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
-                f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
+                f.write(f'file {realname}{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
         cmd(f'''ffmpeg -i "{finalsound}" -q:a 0 -map a "./workdir/mp3file.mp3" -y''')
