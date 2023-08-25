@@ -17,11 +17,15 @@ def command1(bot,message):
     
 @bot.on_message(filters.private & filters.incoming & filters.video | filters.document )
 def _telegram_file(client, message):
-  if os.path.isdir("./downloads/") :
-        sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الفيديو  بعد مدة من فضلك', quote=True)
-        return
-  else :
-        pass
+  try: 
+    with open('mp4file.mp4', 'r') as fh:
+        if os.stat('mp4file.mp4').st_size == 0: 
+            pass
+        else:
+            sent_message = message.reply_text('هناك عملية منتجة تتم الآن . أرسل بعد مدة من فضلك ', quote=True)
+            return
+  except FileNotFoundError: 
+    pass  
   
   user_id = message.from_user.id 
   file = message.video
@@ -35,26 +39,28 @@ def _telegram_file(client, message):
   finalsound = realname+".wav"
   cmd(f'mkdir workdir')
   sent_message = message.reply_text('جار الفصل \n\n قال رسول الله ﷺ  لَيَكونَنَّ مِن أُمَّتي أقْوامٌ يَسْتَحِلُّونَ الحِرَ والحَرِيرَ، والخَمْرَ والمَعازِفَ، ولَيَنْزِلَنَّ أقْوامٌ إلى جَنْبِ عَلَمٍ، يَرُوحُ عليهم بسارِحَةٍ لهمْ، يَأْتِيهِمْ -يَعْنِي الفقِيرَ- لِحاجَةٍ، فيَقولونَ: ارْجِعْ إلَيْنا غَدًا، فيُبَيِّتُهُمُ اللَّهُ، ويَضَعُ العَلَمَ، ويَمْسَخُ آخَرِينَ قِرَدَةً وخَنازِيرَ إلى يَومِ القِيامَةِ. ( صحيح البخاري)', quote=True)
-  cmd(f'ffmpeg -i {file_path} -q:a 0 -map a "./workdir/{mp3file}" -y')
+  cmd(f'''ffmpeg -i "{file_path}" -q:a 0 -map a "./workdir/{mp3file}" -y''')
 
   def duration_detector(length):
         seconds = length
         return seconds
   with audioread.audio_open(f"./workdir/{mp3file}") as f:
             totalsec = f.duration
-  if totalsec<= 180 :
-         cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
-         cmd(f'ffmpeg -i {file_path} -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
+  if totalsec<= 300 :
+         cmd(f'''spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"''')
+         cmd(f'''ffmpeg -i "{file_path}" -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
+         cmd(f'''mv "./workdir/mp4file.mp4" "{mp4file}"''')
          
-         with open(f"./workdir/{mp4file}", 'rb') as f:
+         with open(f"{mp4file}", 'rb') as f:
           bot.send_video(message.chat.id, f)
          shutil.rmtree('./workdir/')
          shutil.rmtree('./downloads/')
+         cmd(f''' rm "{mp4file}"''')
 
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'ffmpeg -i workdir/{mp3file} -f segment -segment_time 180 -c copy "./parts/{realname}%09d.wav" -y')
+        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 300 -c copy "./parts/{realname}%09d.wav" -y''')
         dir_path = "./parts/"
         count = 0
         for path in os.listdir(dir_path):
@@ -64,30 +70,35 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             cmd(f'spleeter separate -p spleeter:2stems -o workdir {pathy}')
+             cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              coca += 1                    
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
                 f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
-        cmd(f'ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y')
-        cmd(f'ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/{mp4file}" -y')
-
-        with open(f"./workdir/{mp4file}", 'rb') as f:
+        cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
+        cmd(f'''ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
+        cmd(f'''mv "./workdir/mp4file.mp4" "{mp4file}"''')
+        with open(f"{mp4file}", 'rb') as f:
           bot.send_video(message.chat.id, f)
           shutil.rmtree('./workdir/')
           shutil.rmtree('./parts/') 
           shutil.rmtree('./downloads/')
+          cmd(f''' rm "{mp4file}"''')
 
 
 @bot.on_message(filters.private & filters.incoming & filters.audio | filters.voice )
 def _telegram_file(client, message):
-  if os.path.isdir("./downloads/") :
-        sent_message = message.reply_text('هناك عملية يتم الآن . أرسل الصوتية  بعد مدة من فضلك', quote=True)
-        return
-  else :
-        pass
+  try: 
+    with open('mp3file.mp3', 'r') as fh:
+        if os.stat('mp3file.mp3').st_size == 0: 
+            pass
+        else:
+            sent_message = message.reply_text('هناك عملية منتجة تتم الآن . أرسل بعد مدة من فضلك ', quote=True)
+            return
+  except FileNotFoundError: 
+    pass  
     
   user_id = message.from_user.id 
   file = message.voice
@@ -107,19 +118,22 @@ def _telegram_file(client, message):
         return seconds
   with audioread.audio_open(f"workdir/{mp3file}") as f:
             totalsec = f.duration
-  if totalsec<= 180 :
-         cmd(f'spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"')
-         cmd(f'ffmpeg -i {vocals} -q:a 0 -map a "./workdir/{mp3file}" -y')
+  if totalsec<= 300 :
+         cmd(f'''spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"''')
+         cmd(f'''ffmpeg -i "{vocals}" -q:a 0 -map a "./workdir/mp3file.mp3" -y''')
+         cmd(f'''mv "./workdir/mp3file.mp3" "{mp3file}"''')
 
-         with open(f"./workdir/{mp3file}", 'rb') as f:
+
+         with open(f"{mp3file}", 'rb') as f:
           bot.send_audio(message.chat.id, f)
           shutil.rmtree('./workdir/')
           shutil.rmtree('./downloads/')
+          cmd(f'''rm "{mp3file}"''')
 
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 180 -c copy "./parts/{realname}%09d.wav" -y')
+        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 300 -c copy "./parts/{realname}%09d.wav" -y''')
 
         dir_path = "./parts/"
         count = 0
@@ -130,15 +144,17 @@ def _telegram_file(client, message):
         coca=0
         while (coca < numbofitems): 
              pathy=f"./parts/{realname}00000000{coca}.wav"
-             cmd(f'spleeter separate -p spleeter:2stems -o workdir {pathy}')
+             cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              coca += 1                    
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
                 f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
-        cmd(f'ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y')
-        cmd(f'ffmpeg -i {finalsound} -q:a 0 -map a "./workdir/{mp3file}" -y')
+        cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
+        cmd(f'''ffmpeg -i "{finalsound}" -q:a 0 -map a "./workdir/mp3file.mp3" -y''')
+        cmd(f'''mv "./workdir/mp3file.mp3" "{mp3file}"''')
+
 
 
         with open(f"./workdir/{mp3file}", 'rb') as f:
