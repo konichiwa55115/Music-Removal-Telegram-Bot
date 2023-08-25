@@ -46,7 +46,7 @@ def _telegram_file(client, message):
         return seconds
   with audioread.audio_open(f"./workdir/{mp3file}") as f:
             totalsec = f.duration
-  if totalsec<= 120 :
+  if totalsec<= 300 :
          cmd(f'''spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"''')
          cmd(f'''ffmpeg -i "{file_path}" -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
          cmd(f'''mv "./workdir/mp4file.mp4" "{mp4file}"''')
@@ -60,7 +60,7 @@ def _telegram_file(client, message):
 
   else :
         cmd(f'mkdir parts')
-        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 120 -c copy "./parts/{realname}%09d.wav" -y''')
+        cmd(f'''ffmpeg -i "./workdir/{mp3file}" -f segment -segment_time 300 -c copy "./parts/{realname}%09d.wav" -y''')
         dir_path = "./parts/"
         count = 0
         for path in os.listdir(dir_path):
