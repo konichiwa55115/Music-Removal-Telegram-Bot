@@ -33,10 +33,10 @@ def _telegram_file(client, message):
   filename = os.path.basename(file_path)
   realname, ext = os.path.splitext(filename)
   global mp3file
-  mp3file = realname+".mp3"
+  mp3file = f"{realname}.mp3"
   global mp4file
-  mp4file= realname+".mp4"
-  finalsound = realname+".wav"
+  mp4file= f"{realname}.mp4"
+  finalsound = f"{realname}.wav"
   cmd(f'mkdir workdir')
   sent_message = message.reply_text('جار الفصل \n\n قال رسول الله ﷺ  لَيَكونَنَّ مِن أُمَّتي أقْوامٌ يَسْتَحِلُّونَ الحِرَ والحَرِيرَ، والخَمْرَ والمَعازِفَ، ولَيَنْزِلَنَّ أقْوامٌ إلى جَنْبِ عَلَمٍ، يَرُوحُ عليهم بسارِحَةٍ لهمْ، يَأْتِيهِمْ -يَعْنِي الفقِيرَ- لِحاجَةٍ، فيَقولونَ: ارْجِعْ إلَيْنا غَدًا، فيُبَيِّتُهُمُ اللَّهُ، ويَضَعُ العَلَمَ، ويَمْسَخُ آخَرِينَ قِرَدَةً وخَنازِيرَ إلى يَومِ القِيامَةِ. ( صحيح البخاري)', quote=True)
   cmd(f'''ffmpeg -i "{file_path}" -q:a 0 -map a "./workdir/{mp3file}" -y''')
