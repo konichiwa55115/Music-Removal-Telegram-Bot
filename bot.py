@@ -111,7 +111,7 @@ def _telegram_file(client, message):
   cmd(f'mkdir workdir')
   vocals=f"./workdir/{realname}/vocals.wav"
   sent_message = message.reply_text('جار الفصل \n\n قال رسول الله ﷺ  لَيَكونَنَّ مِن أُمَّتي أقْوامٌ يَسْتَحِلُّونَ الحِرَ والحَرِيرَ، والخَمْرَ والمَعازِفَ، ولَيَنْزِلَنَّ أقْوامٌ إلى جَنْبِ عَلَمٍ، يَرُوحُ عليهم بسارِحَةٍ لهمْ، يَأْتِيهِمْ -يَعْنِي الفقِيرَ- لِحاجَةٍ، فيَقولونَ: ارْجِعْ إلَيْنا غَدًا، فيُبَيِّتُهُمُ اللَّهُ، ويَضَعُ العَلَمَ، ويَمْسَخُ آخَرِينَ قِرَدَةً وخَنازِيرَ إلى يَومِ القِيامَةِ. ( صحيح البخاري)', quote=True)
-  cmd(f'ffmpeg -i {file_path} -q:a 0 -map a "./workdir/{mp3file}" -y')
+  cmd(f'''ffmpeg -i "{file_path}" -q:a 0 -map a "./workdir/{mp3file}" -y''')
 
   def duration_detector(length):
         seconds = length
