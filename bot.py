@@ -75,7 +75,7 @@ def _telegram_file(client, message):
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
-                f.write(f'''file "{realname}00000000{kaka}/vocals.wav" \n''')
+                f.write(f'''file '{realname}00000000{kaka}/vocals.wav' \n''')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
         cmd(f'''ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "mp4file.mp4" -y''')
@@ -149,7 +149,7 @@ def _telegram_file(client, message):
         with open('./workdir/list.txt', 'x') as f:
              kaka=0
              while (kaka < numbofitems):
-                f.write(f'''file "{realname}00000000{kaka}/vocals.wav" \n''')
+                f.write(f'''file '{realname}00000000{kaka}/vocals.wav' \n''')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
         cmd(f'''ffmpeg -i "./workdir/{finalsound}" -q:a 0 -map a "mp3file.mp3" -y''')
