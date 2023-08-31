@@ -48,14 +48,14 @@ def _telegram_file(client, message):
             totalsec = f.duration
   if totalsec<= 300 :
          cmd(f'''spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"''')
-         cmd(f'''ffmpeg -i "{file_path}" -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
-         cmd(f'''mv "./workdir/mp4file.mp4" "{mp4file}"''')
+         cmd(f'''ffmpeg -i "{file_path}" -i "./workdir/{realname}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "mp4file.mp4" -y''')
+         cmd(f'''mv "mp4file.mp4" "{mp4file}"''')
          
          with open(f"{mp4file}", 'rb') as f:
           bot.send_video(message.chat.id, f)
          shutil.rmtree('./workdir/')
          shutil.rmtree('./downloads/')
-         cmd(f''' rm "{mp4file}"''')
+         cmd(f''' rm "{mp4file}" ''')
 
 
   else :
@@ -78,8 +78,8 @@ def _telegram_file(client, message):
                 f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
-        cmd(f'''ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "./workdir/mp4file.mp4" -y''')
-        cmd(f'''mv "./workdir/mp4file.mp4" "{mp4file}"''')
+        cmd(f'''ffmpeg -i {file_path} -i "./workdir/{finalsound}" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "mp4file.mp4" -y''')
+        cmd(f'''mv "mp4file.mp4" "{mp4file}"''')
         with open(f"{mp4file}", 'rb') as f:
           bot.send_video(message.chat.id, f)
           shutil.rmtree('./workdir/')
@@ -120,8 +120,8 @@ def _telegram_file(client, message):
             totalsec = f.duration
   if totalsec<= 300 :
          cmd(f'''spleeter separate -p spleeter:2stems -o workdir "./workdir/{mp3file}"''')
-         cmd(f'''ffmpeg -i "{vocals}" -q:a 0 -map a "./workdir/mp3file.mp3" -y''')
-         cmd(f'''mv "./workdir/mp3file.mp3" "{mp3file}"''')
+         cmd(f'''ffmpeg -i "{vocals}" -q:a 0 -map a "mp3file.mp3" -y''')
+         cmd(f'''mv "mp3file.mp3" "{mp3file}"''')
 
 
          with open(f"{mp3file}", 'rb') as f:
@@ -152,16 +152,18 @@ def _telegram_file(client, message):
                 f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
-        cmd(f'''ffmpeg -i "{finalsound}" -q:a 0 -map a "./workdir/mp3file.mp3" -y''')
-        cmd(f'''mv "./workdir/mp3file.mp3" "{mp3file}"''')
+        cmd(f'''ffmpeg -i "{finalsound}" -q:a 0 -map a "mp3file.mp3" -y''')
+        cmd(f'''mv "mp3file.mp3" "{mp3file}"''')
 
 
 
-        with open(f"./workdir/{mp3file}", 'rb') as f:
+        with open(f"{mp3file}", 'rb') as f:
           bot.send_audio(message.chat.id, f)
         shutil.rmtree('./workdir/')
         shutil.rmtree('./parts/')   
         shutil.rmtree('./downloads/')
+        cmd(f'''rm "{mp3file}"''')
+
 
           
         
