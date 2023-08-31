@@ -152,7 +152,7 @@ def _telegram_file(client, message):
                 f.write(f'file {realname}00000000{kaka}/vocals.wav\n')
                 kaka += 1
         cmd(f'''ffmpeg -f concat -safe 0 -i ./workdir/list.txt "./workdir/{finalsound}" -y''')
-        cmd(f'''ffmpeg -i "{finalsound}" -q:a 0 -map a "mp3file.mp3" -y''')
+        cmd(f'''ffmpeg -i "./workdir/{finalsound}" -q:a 0 -map a "mp3file.mp3" -y''')
         cmd(f'''mv "mp3file.mp3" "{mp3file}"''')
 
 
