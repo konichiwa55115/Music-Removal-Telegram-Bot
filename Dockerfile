@@ -8,12 +8,14 @@ RUN apt-get install yasm libvpx. libx264. -y
 
 
 RUN pip3 install -U pip
+RUN pip3 install spleeter
+RUN pip3 install typer
+
 
 COPY requirements.txt /requirements.txt
 
 RUN cd /
 RUN pip3 install -U -r requirements.txt
-RUN pip3 install spleeter
 RUN mkdir /kony
 WORKDIR /kony
 COPY start.sh /start.sh
