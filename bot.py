@@ -27,7 +27,6 @@ def musicrmv(x,y):
   finalsound = f"{nom}.wav"
   cmd(f'mkdir workdir')
   cmd(f'''ffmpeg -i "{file_path}" -q:a 0 -map a "{mp3file}" -y''')
-
   def duration_detector(length):
         seconds = length
         return seconds
@@ -42,8 +41,6 @@ def musicrmv(x,y):
           cmd(f'''ffmpeg -i "{file_path}" -i "./workdir/{nom}/vocals.wav" -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 "{mp4file}" -y''')
           bot.send_video(user_id, mp4file,caption=nom)
           os.remove(mp4file)
-
-
   else :
         cmd(f'mkdir parts')
         cmd(f'''ffmpeg -i "{mp3file}" -f segment -segment_time 100 -c copy "./parts/rmvd%09d.wav" -y''')
@@ -55,8 +52,7 @@ def musicrmv(x,y):
              cmd(f'''spleeter separate -p spleeter:2stems -o workdir "{pathy}"''')
              rmvdvoice = f"./workdir/rmvd{myzfillvar}/vocals.wav"
              with open('list.txt', 'a') as f:
-                f.write(f'''file {rmvdvoice} \n''')
-             
+                f.write(f'''file {rmvdvoice} \n''')   
         cmd(f'''ffmpeg -f concat -safe 0 -i list.txt "{finalsound}" -y''')
         if ex in audioexs : 
            cmd(f'''ffmpeg -i "{finalsound}" -q:a 0 -map a "{mp3file}" -y''')
@@ -70,13 +66,6 @@ def musicrmv(x,y):
   shutil.rmtree('./workdir/')
   os.remove(file_path)
   os.remove(mp3file)
-
-
-
-
-
-
-#put your id,hash and token instead of stars ***
 
 
 @bot.on_message(filters.command('start') & filters.private)
