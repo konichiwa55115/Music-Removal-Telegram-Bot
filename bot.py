@@ -3,6 +3,7 @@ from pyrogram import Client, filters
 import shutil
 from os import system as cmd
 import audioread
+from yt_dlp import YoutubeDL
 
 bot = Client(
     "msrmv",
@@ -21,8 +22,8 @@ def musicrmv(x,y):
   user_id = y
   filename = os.path.basename(file_path)
   nom,ex = os.path.splitext(filename)
-  mp4file = f"{nom}.mp4"
-  mp3file = f"{nom}.mp3"
+  mp4file = f"msrmvd{nom}.mp4"
+  mp3file = f"msrmvd{nom}.mp3"
   finalsound = f"{nom}.wav"
   cmd(f'mkdir workdir')
   cmd(f'''ffmpeg -i "{file_path}" -q:a 0 -map a "{mp3file}" -y''')
@@ -69,6 +70,69 @@ def musicrmv(x,y):
      print("pass anyway !")
   os.remove(mp3file)
 
+@bot.on_message(filters.command('ytplst') & filters.text & filters.private)
+def command4(bot,message):
+     x = message.text.split(" ")[1]
+     url = x.split(" ")[0]
+     dlmode = message.text.split(" ")[-1] 
+     global ytplstid
+     ytplstid = message.from_user.id
+     cmd(f'''yt-dlp --flat-playlist -i --print-to-file url ytplst.txt {url}''')
+     cmd(f'''wc -l < ytplst.txt > "{temptxt}"''')
+     with open(temptxt, 'r') as file:
+      temp = file.read().rstrip('\n') 
+     global plstnumbofvid
+     plstnumbofvid = int(temp) + 1
+     os.remove(temptxt)
+     if dlmode == "vid" : 
+       for i in range(1,plstnumbofvid):
+         cmd(f'sed -n {i}p ytplst.txt > "{temptxt}"')
+         with open(temptxt, 'r') as file:
+           link = file.read().rstrip('\n')  
+         with YoutubeDL() as ydl: 
+          info_dict = ydl.extract_info(f'{link}', download=False)
+          video_url = info_dict.get("url", None)
+          video_id = info_dict.get("id", None)
+          video_title = info_dict.get('title', None).replace('＂', '').replace('"', '').replace("'", "").replace("｜", "").replace("|", "") 
+          mp32file =   f"{video_title}.mp3"
+          txtresfile = f"{video_title}.txt"
+          mp42file =   f"{video_title}.mp4"
+         cmd(f'''yt-dlp -f 18 -ciw  -o "{mp42file}" "{link}"''')
+         musicrmv(mp42file,ytplstid)
+         os.remove(temptxt)
+     elif dlmode == "vid720":
+      for i in range(1,plstnumbofvid):
+         cmd(f'sed -n {i}p ytplst.txt > "{temptxt}"')
+         with open(temptxt, 'r') as file:
+           link = file.read().rstrip('\n')  
+         with YoutubeDL() as ydl: 
+          info_dict = ydl.extract_info(f'{link}', download=False)
+          video_url = info_dict.get("url", None)
+          video_id = info_dict.get("id", None)
+          video_title = info_dict.get('title', None).replace('＂', '').replace('"', '').replace("'", "").replace("｜", "").replace("|", "") 
+          mp32file =   f"{video_title}.mp3"
+          txtresfile = f"{video_title}.txt"
+          mp42file =   f"{video_title}.mp4"
+         cmd(f'''yt-dlp -f 22 -ciw  -o "{mp42file}" "{link}"''')
+         musicrmv(mp42file,ytplstid)
+         os.remove(temptxt)
+     else : 
+      for i in range(1,plstnumbofvid):
+         cmd(f'sed -n {i}p ytplst.txt > "{temptxt}"')
+         with open(temptxt, 'r') as file:
+           link = file.read().rstrip('\n')  
+         with YoutubeDL() as ydl: 
+          info_dict = ydl.extract_info(f'{link}', download=False)
+          video_url = info_dict.get("url", None)
+          video_id = info_dict.get("id", None)
+          video_title = info_dict.get('title', None).replace('＂', '').replace('"', '').replace("'", "").replace("｜", "").replace("|", "") 
+          mp32file =   f"{video_title}.mp3"
+          txtresfile = f"{video_title}.txt"
+          mp42file =   f"{video_title}.mp4"
+         cmd(f'''yt-dlp -ciw  --extract-audio --audio-format mp3  -o "{video_title}"  "{link}"''')
+         musicrmv(mp32file,ytplstid)
+         os.remove(temptxt)
+     os.remove("ytplst.txt")
 
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
