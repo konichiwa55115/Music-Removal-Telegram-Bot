@@ -4,6 +4,7 @@ pyrogram
 tgcrypto
 ffmpeg-python
 audioread
+yt-dlp
 
 
 
