@@ -103,7 +103,7 @@ def command4(bot,message):
          musicrmv(mp42file,ytplstid)
          os.remove(temptxt)
      elif dlmode == "vid720":
-      for i in range(39,plstnumbofvid):
+      for i in range(40,plstnumbofvid):
          cmd(f'sed -n {i}p ytplst.txt > "{temptxt}"')
          with open(temptxt, 'r') as file:
            link = file.read().rstrip('\n')  
