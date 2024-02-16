@@ -3,7 +3,6 @@ from pyrogram import Client, filters
 import shutil
 from os import system as cmd
 import audioread
-from yt_dlp import YoutubeDL
 
 bot = Client(
     "msrmv",
