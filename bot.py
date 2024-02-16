@@ -64,6 +64,7 @@ def musicrmv(x,y):
              os.remove(mp4file)
         shutil.rmtree('./parts/') 
         os.remove("list.txt")
+        os.remove(finalsound)
   shutil.rmtree('./workdir/')
   if os.path.isfile(file_path):
    os.remove(file_path)
