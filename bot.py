@@ -13,6 +13,7 @@ bot = Client(
 )
 audioexs = [".mp3",".ogg",".m4a"]
 videoexs = [".mp4",".mkv",".wmv"]
+temptxt = "res.txt"
 
 
 
